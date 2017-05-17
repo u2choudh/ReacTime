@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      
+      <style type="text/css">
+          .circle{
+              width: 120px;
+              height: 120px;
+              border-radius: 50%;
+              margin: 100px;
+              background-color: indigo;
+              position: relative;
+          }
+      
+      
+      </style>
+    
+  </head>
+  <body>
+      <div>
+          <h1>Test your reaction</h1>
+      <p id="time-show">Your Reaction Time: </p></div>
+      
+      <div><p id="fastestTime">Your Fastest Time Yet:</p></div>
+      
+      <div class="circle" id="circle"></div>
+    
+    <script type="text/javascript">
+        var circle = document.getElementById("circle");
+        
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++ ) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+        
+        var secondStartTime = 0;
+        var top = Math.random() * 300;
+        
+        function shapeAppear(){
+            if(circle.style.display == 'block'){
+                circle.style.display = 'none';
+            }
+            else{
+                circle.style.display = 'block';
+                circle.style.top = top + "px";
+                circle.style.backgroundColor = getRandomColor();
+                secondStartTime = new Date().getTime();
+            }
+        }
+        
+        
+        
+        var bestTime = 1000000000;
+        var start = new Date().getTime();
+        
+        circle.onclick = function(){
+            var end = new Date().getTime();
+            var time = 0;
+            if(secondStartTime == 0){
+                time = end - start;
+            } else{
+                time = end - secondStartTime
+            }
+            circle.style.display = "none";
+            
+            document.getElementById("time-show").innerHTML = "Your Reaction Time: " + time/1000 + "s";
+
+            if(time < bestTime){
+                bestTime = time;
+                document.getElementById("fastestTime").innerHTML = "Your Fastest Time Yet: " + bestTime/1000+ "s";
+            } else{
+                document.getElementById("fastestTime").innerHTML = "Your Fastest Time Yet: " + bestTime/1000 + "s";
+            }
+            
+            
+            setTimeout(shapeAppear,Math.random() * 4000);
+        }
+        
+        
+        
+      
+    </script>  
+    
+  </body>
+</html>
